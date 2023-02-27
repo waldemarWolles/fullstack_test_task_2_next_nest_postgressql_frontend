@@ -4,6 +4,8 @@ import { Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import React from 'react'
 import { Button } from '@mui/material'
 import { Event } from '../typings'
+import Link from 'next/link'
+
 const userData = {
   name: 'John',
   surname: 'Smith',
@@ -108,6 +110,7 @@ const User = () => {
           <FormGroup>
             {currentAllEvents.map((event) => (
               <FormControlLabel
+                key={event.id}
                 onChange={() => handleChooseEvent(event)}
                 control={<Checkbox checked={event.chosen} />}
                 label={event.name}
@@ -122,10 +125,15 @@ const User = () => {
         <div>
           <h1 className="font-bold">Subscribed Events</h1>
           {currentUserEvents.map((event) => (
-            <>
-              <h3 className="font-semibold">Event: {event.name}</h3>
+            <div key={event.id}>
+              <h3 className="font-semibold">
+                Event:
+                <Link href={`/eventtype/${event.name}`} className="px-2 py-1 text-blue-500 rounded-lg">
+                  {event.name}
+                </Link>
+              </h3>
               <h3 className="font-semibold">Description: {event.description}</h3>
-            </>
+            </div>
           ))}
           <Button onClick={() => setEditUserEventsMode(true)} variant="contained" className="bg-black">
             Edit Mode
